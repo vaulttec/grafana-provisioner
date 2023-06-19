@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "grafana-provisioner.fullname" . }}
+  labels:
+    {{- include "grafana-provisioner.labels" . | nindent 4 }}
+stringData:
+  tenants: {{- .Files.Get "tenants.yml" }}

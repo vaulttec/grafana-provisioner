@@ -1,0 +1,6 @@
+---
+collections:
+  # https://docs.ansible.com/ansible/latest/collections/community/grafana
+  - name: community.grafana
+  # https://docs.ansible.com/ansible/latest/collections/kubernetes/core
+  - name: kubernetes.core

@@ -1,0 +1,32 @@
+---
+- name: Create Grafana organizations
+  hosts: localhost
+  gather_facts: false
+
+  vars_files:
+    - vars/tenants.yml
+    - vars/configuration.yml
+  vars:
+    # dictionary with Grafana organization ids (mapped by tenant name)
+    # populated in 'tasks/create-organization.yml'
+    org_ids: {}
+
+  tasks:
+    - name: Create all Grafana organizations
+      include_tasks: tasks/create-organization.yml
+      loop: "{{ tenants }}"
+      loop_control:
+        loop_var: tenant
+        label: "{{ tenant.name }}"
+
+    - name: Create configmap with Grafana LDAP configuration
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: grafana
+            namespace: "{{ k8s_namespace }}"
+          type: Opaque
+          stringData:
+            ldap-toml: "{{ lookup('template', 'templates/ldap-toml.j2') }}"

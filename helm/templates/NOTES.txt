@@ -1,0 +1,1 @@
+Grafana server is provisioned in {{ .Release.Namespace }} namespace.

@@ -1,0 +1,30 @@
+verbose_logging = false
+
+[[servers]]
+host = "{{ ldap_host }}"
+port = 636
+use_ssl = true
+start_tls = false
+ssl_skip_verify = true
+bind_dn = "{{ ldap_bind_dn }}"
+bind_password = "{{ ldap_bind_password }}"
+search_filter = "(sAMAccountName=%s)"
+search_base_dns = ["{{ ldap_base_dn }}"]
+
+[servers.attributes]
+name = "sAMAccountName"
+username = "sAMAccountName"
+member_of = "memberOf"
+email = "mail"
+
+
+{% for tenant in tenants %}
+{% for mapping in tenant.ldap_group_mappings %}
+[[servers.group_mappings]]
+group_dn = "{{ mapping.cn }}"
+org_role = "{{ mapping.role }}"
+org_id = {{ org_ids[tenant.name] }}
+
+{% endfor %}
+
+{% endfor %}

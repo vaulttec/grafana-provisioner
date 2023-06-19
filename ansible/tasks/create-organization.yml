@@ -1,0 +1,35 @@
+---
+- name: Create Grafana organization for tenant '{{ tenant.name }}'
+  community.grafana.grafana_organization:
+    url: "{{ grafana_url }}"
+    url_username: "{{ grafana_username }}"
+    url_password: "{{ grafana_password }}"
+    name: "{{ tenant.name }}"
+  register: organization
+
+- name: Add organization id for tenant '{{ tenant.name }}'
+  set_fact:
+    org_ids: "{{ org_ids | combine({ organization.org.name: organization.org.id }) }}"
+
+- name: Create Loki datasource for tenant '{{ tenant.name }}'
+  community.grafana.grafana_datasource:
+    url: "{{ grafana_url }}"
+    url_username: "{{ grafana_username }}"
+    url_password: "{{ grafana_password }}"
+    access: direct
+    name: Loki
+    uid: loki-ds
+    ds_type: loki
+    ds_url: http://loki-gateway/
+    org_id: "{{ organization.org.id | int }}"
+    additional_json_data:
+      timeout: "300"
+#      derivedFields:
+#        - datasourceUID: tempo-ds
+#          matcherRegex: "traceId=(\\w+)"
+#          url: '$${__value.raw}'
+#          name: traceId
+      httpHeaderName1: "X-Scope-OrgID"
+    additional_secure_json_data:
+      httpHeaderValue1: "{{ tenant.name ~ grafana_environment }}"
+  register: datasource

@@ -1,0 +1,14 @@
+---
+tenants:
+  - name: tenant1
+    ldap_group_mappings:
+      - cn: cn=Editors,OU=Tenant1,OU=Tenants,DC=acme,DC=com
+        role: Editor
+      - cn: cn=Viewers,OU=Tenant1,OU=Tenants,DC=acme,DC=com
+        role: Viewer
+  - name: tenant2
+    ldap_group_mappings:
+      - cn: cn=Editors,OU=Tenant2,OU=Tenants,DC=acme,DC=com
+        role: Editor
+      - cn: cn=Viewers,OU=Tenant2,OU=Tenants,DC=acme,DC=com
+        role: Viewer

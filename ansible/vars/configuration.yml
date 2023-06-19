@@ -1,0 +1,12 @@
+---
+k8s_namespace: observability
+
+grafana_url: http://grafana/
+grafana_username: admin
+grafana_password: changeme
+grafana_environment: test   # suffix of datasource tenant id: test or prod
+
+ldap_host: directory.acme.com
+ldap_bind_dn: cn=LDAP,OU=Users,DC=acme,DC=com
+ldap_bind_password: changeme
+ldap_base_dn: OU=Tenants,DC=acme,DC=com
