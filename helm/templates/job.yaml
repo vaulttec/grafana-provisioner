@@ -19,7 +19,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "grafana-provisioner.serviceAccountName" . }}
+      serviceAccountName: {{ include "grafana-provisioner.fullname" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -38,10 +38,16 @@ spec:
             - secretRef:
                 name: {{ include "grafana-provisioner.fullname" . }}
           volumeMounts:
+            - name: configuration
+              mountPath: /ansible/vars/configuration.yml
+              subPath: configuration
             - name: tenants
-              mountPath: /ansible/var/tenants.yml
+              mountPath: /ansible/vars/tenants.yml
               subPath: tenants
       volumes:
+        - name: configuration
+          secret:
+            secretName: {{ include "grafana-provisioner.fullname" . }}
         - name: tenants
           configMap:
             name: {{ include "grafana-provisioner.fullname" . }}

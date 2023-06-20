@@ -49,14 +49,3 @@ Selector labels
 app.kubernetes.io/name: {{ include "grafana-provisioner.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
-
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "grafana-provisioner.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "grafana-provisioner.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}

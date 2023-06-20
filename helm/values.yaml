@@ -5,25 +5,18 @@
 replicaCount: 1
 
 image:
-  repository: vaulttec/grafana-provisioner
+  repository: tjuerge/grafana-provisioner
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
+
+command: '["ansible-playbook", "provision-grafana.yml"]'
+args: '["-vv", "-e k8s_environment=test"]'
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-#args: ['-e k8s_environment=test']
-
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
 
 podAnnotations: {}
 
@@ -54,9 +47,6 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-command: '["ansible-playbook", "provision-grafana"]'
-args: '["-vv"]'
 
 
 grafana:
