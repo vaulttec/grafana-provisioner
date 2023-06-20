@@ -34,9 +34,6 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          envFrom:
-            - secretRef:
-                name: {{ include "grafana-provisioner.fullname" . }}
           volumeMounts:
             - name: configuration
               mountPath: /ansible/vars/configuration.yml
