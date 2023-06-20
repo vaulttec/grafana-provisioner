@@ -30,6 +30,6 @@ RUN ansible-galaxy collection install \
         kubernetes.core \
         community.grafana
 
-COPY ansible /ansible
+COPY --chown=ansible:ansible ansible /ansible
 
 CMD [ "ansible-playbook", "--version" ]
