@@ -17,7 +17,7 @@ The playbook can be executed manually or executed as a one-off job in Kubernetes
 
 
 ## Configuration
-- List of tenants with LDAP group mappings (group cn and org role) in `tenants.yml` (sym-linked to `ansible/vars/tenants.yml` to included in Ansible playbook and `helm/tenants.yml` to be imported in k8s ConfigMap)
+- List of tenants with LDAP group mappings (group cn and org role) in `tenants.yml` (sym-linked to `ansible/vars/tenants.yml` to be included in Ansible playbook and `helm/tenants.yml` to be imported in k8s ConfigMap)
 - Grafana URL and username / password (as command-line parameters or Helm values)
 - LDAP bind username / password (as command-line parameters or Helm values)
 - Kubernetes cluster in `KUBECONFIG`
