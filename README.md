@@ -1,4 +1,7 @@
-# Grafana Provisioner
+# Grafana Provisioner [![Build Status](https://github.com/vaulttec/grafana-provisioner/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/vaulttec/grafana-provisioner/actions/workflows/docker-publish.yml) [![Docker Image](https://img.shields.io/docker/pulls/tjuerge/grafana-provisioner.svg)](https://hub.docker.com/r/tjuerge/grafana-provisioner)
+
+================
+
 This project provides an Ansible playbook for provisioning a Grafana server running in Kubernetes. The playbook will provision
 - Grafana organizations (defined in `tenants.yml`) with Loki data source
 - Grafana LDAP configuration (stored in k8s secret `config-toml') with the organization's group mappings
