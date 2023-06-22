@@ -11,4 +11,3 @@ subjects:
 roleRef:
   kind: Role
   name: {{ include "grafana-provisioner.fullname" . }}
-  namespace: {{ .Release.Namespace }}
