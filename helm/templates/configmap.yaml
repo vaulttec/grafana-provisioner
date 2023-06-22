@@ -5,4 +5,7 @@ metadata:
   labels:
     {{- include "grafana-provisioner.labels" . | nindent 4 }}
 data:
-  tenants: |- {{- .Files.Get "tenants.yml" | nindent 4 }}
+  tenants: |-
+    ---
+    tenants:
+      {{- toYaml .Values.tenants | nindent 6 }}

@@ -61,3 +61,20 @@ grafana:
       bind_dn: cn=LDAP,OU=Users,DC=acme,DC=com
       bind_password: changeme
       base_dn: OU=Tenants,DC=acme,DC=com
+
+
+tenants: {}
+# To specify the tenant configuration (ideally it's provided in its own value file), uncomment
+# the following, adjust them as necessary, and remove the curly braces after 'tenants:'.
+# - name: tenant1
+#    ldap_group_mappings:
+#      - cn: cn=Editors,OU=Tenant1,OU=Tenants,DC=acme,DC=com
+#        role: Editor
+#      - cn: cn=Viewers,OU=Tenant1,OU=Tenants,DC=acme,DC=com
+#        role: Viewer
+#  - name: tenant2
+#    ldap_group_mappings:
+#      - cn: cn=Editors,OU=Tenant2,OU=Tenants,DC=acme,DC=com
+#        role: Editor
+#      - cn: cn=Viewers,OU=Tenant2,OU=Tenants,DC=acme,DC=com
+#        role: Viewer

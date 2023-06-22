@@ -36,6 +36,7 @@ The folder `ansible/` holds an Ansible playbook which can be executed manually f
   pip install kubernetes
   ansible-galaxy collection install -r requirements.yml
   ```
+- Provide your tenant configuration in `vars/tenants.yml` 
 - Execute playbook (configuration is defined in `ansible/vars/configuration.yml` or can be specified as command-line arguments)
   ```
   ansible-playbook provision-grafana.yml \
@@ -52,21 +53,37 @@ The folder `ansible/` holds an Ansible playbook which can be executed manually f
 
 ### Kubernetes Job
 The folder `helm/` holds a Helm chart for executing the Ansible playbook as a one-off job in Kubernetes:
-- Create a values file with your configuration, e.g.
+- Provide a values file with your configuration, e.g. `myconfig.yml`
   ```yaml
   grafana:
     url: http://grafana/
     username: admin
     password: admin
     environment: "test"
-  
+
     ldap:
       host: directory.acme.com
       bind_dn: cn=LDAP,OU=Users,DC=acme,DC=com
       bind_password: changeme
       base_dn: OU=Tenants,DC=acme,DC=com
   ```
+- Provide a values file with your tenants, e.g. `mytenants.yml`
+  ```yaml
+  tenants:
+  - name: tenant1
+    ldap_group_mappings:
+    - cn: cn=Editors,OU=Tenant1,OU=Tenants,DC=acme,DC=com
+      role: Editor
+    - cn: cn=Viewers,OU=Tenant1,OU=Tenants,DC=acme,DC=com
+      role: Viewer
+    - name: tenant2
+      ldap_group_mappings:
+      - cn: cn=Editors,OU=Tenant2,OU=Tenants,DC=acme,DC=com
+        role: Editor
+      - cn: cn=Viewers,OU=Tenant2,OU=Tenants,DC=acme,DC=com
+        role: Viewer
+  ```
 - Use Helm to deploy the provisioner job to Kubernetes, e.g.
   ```
-  helm install -f myvalues.yaml grafana-provisioner ./helm
+  helm install -f myconfig.yaml -f mytenants grafana-provisioner ./helm
   ```
